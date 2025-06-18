@@ -1,0 +1,61 @@
+Create DataBase Daniel_Hernandez
+
+
+Create Table Patient (
+ Id int primary Key identity(1,1),
+ Name NVARCHAR(100) NOT NULL,
+ 
+ )
+ 
+ Create Table Orders (
+ Id int primary Key identity(1,1),
+ OrderDate DateTime NOT NULL,
+ IdPatient INT NOT NULL,
+ AppointmentDate DATETIME NOT NULL,
+ State BIT NOT NULL
+ CONSTRAINT FK_Patient FOREIGN KEY (IdPatient ) REFERENCES Patient(id )
+ )
+
+
+ Create Table ExamsOrder (
+ Id int primary Key identity(1,1),
+ IdExam INT NOT NULL,
+ IdOrder INT NOT NULL
+ CONSTRAINT FK_Order FOREIGN KEY (IdOrder) REFERENCES Orders(Id),
+ CONSTRAINT FK_Exams FOREIGN KEY (IdExam) REFERENCES Exams(id )
+ )
+
+
+ Create table Users(
+ Id INT PRIMARY KEY IDENTITY(1,1),
+ UserName NVARCHAR(100) NOT NULL,
+ Password NVARCHAR(MAX) NOT NULL
+
+ )
+
+INSERT INTO Users(UserName, Password) VALUES('demo','1234')
+
+
+--Obtener todas las órdenes realizadas hoy
+SELECT Id, OrderDate, IdPatient
+FROM Orders O
+WHERE O.OrderDate >= CONVERT(DATE, GETDATE());
+Select * from Orders
+ --Obtener todos los exámenes de una orden específica
+ SELECT  O.Id AS NumberOrder, EO.NameExam
+ FROM Orders O
+  JOIN ExamsOrder EO ON EO.IdOrder = O.Id
+  WHERE O.Id = 18
+
+--Contar cuántas órdenes tiene cada paciente
+SELECT COUNT(P.Id) as CountOrders, P.Id, P.Name
+FROM Orders O
+JOIN Patient P ON P.Id =  O.IdPatient
+GROUP BY  P.Id,  P.Name
+
+
+
+
+
+
+
