@@ -1,4 +1,4 @@
-namespace Pruebas_Tecnica
+namespace Api_Prueba_Tecnica
 {
     public class WeatherForecast
     {

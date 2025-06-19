@@ -1,4 +1,4 @@
-﻿namespace Application
+﻿namespace Dominio
 {
     public class Class1
     {
